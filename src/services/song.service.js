@@ -4,6 +4,7 @@ const {emptyOrRows} = require("../utils/helper.util");
 /*
     TODO:
     7. Check what returns postSong
+    8. Substitute console.log by error loging middleware
 */
 
 /*
