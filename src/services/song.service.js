@@ -48,7 +48,7 @@ const getSongById = async (id) => {
 };
 
 // Returns all songs by given genre.
-const getSongByGenreName = async (genreName) => {
+const getSongsByGenreName = async (genreName) => {
     const sql = `
         SELECT song.song_id, song.title, artist.name AS artist_name, 
             genre.name AS genre_name, album.name AS album_name, 
@@ -168,7 +168,7 @@ const postSong = async ({title, artistId, albumId, genreId, releaseDate, duratio
 module.exports = {
     getSongs,
     getSongById,
-    getSongByGenreName,
+    getSongsByGenreName,
     getSongsByArtistName,
     getSongsByTitle,
     getSongsByFilter,
