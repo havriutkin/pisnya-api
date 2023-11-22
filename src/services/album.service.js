@@ -90,5 +90,6 @@ module.exports = {
     getAlbums,
     getAlbumById,
     getAlbumsByTitle,
-    getAlbumByArtistId
+    getAlbumByArtistId,
+    postAlbum
 }
