@@ -20,7 +20,7 @@ const getGenreById = async (id) => {
     const sql = `
         SELECT *
         FROM genre
-        WHERE id = $1;
+        WHERE genre_id = $1;
     `;
 
     const data = await query(sql, [id]);
