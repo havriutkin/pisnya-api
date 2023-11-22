@@ -27,12 +27,13 @@ const getGenreById = async (id) => {
     return data;
 };
 
-// Return genre with given name (empty array if doesn't exist)
+// Return genre with given name. Case-insensitive, partial matching. (empty array if doesn't exist)
 const getGenresByName = async (genreName) => {
     const sql = `
         SELECT *
         FROM genre
-        WHERE name ILIKE $1;
+        WHERE name ILIKE $1
+        ORDER BY LENGTH(name);
     `;
 
     const data = await query(sql, [`%${genreName}%`]);
