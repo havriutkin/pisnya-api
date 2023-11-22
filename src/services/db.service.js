@@ -7,8 +7,8 @@ const db = require("../configs/db.config");
 */
 
 // Makes quiery to the db. If data doesn't exist returns empty array
-const query = async (sql) => {
-    const rows = await db.query(sql);
+const query = async (sql, params) => {
+    const rows = await db.query(sql, params);
     const data = emptyOrRows(rows);
     return data;
 };
