@@ -28,14 +28,14 @@ const getGenreById = async (id) => {
 };
 
 // Return genre with given name (empty array if doesn't exist)
-const getGenreByName = async (genreName) => {
+const getGenresByName = async (genreName) => {
     const sql = `
         SELECT *
         FROM genre
-        WHERE name = $1;
+        WHERE name ILIKE $1;
     `;
 
-    const data = await query(sql, [genreName]);
+    const data = await query(sql, [`%${genreName}%`]);
     return data;
 };
 
@@ -63,6 +63,6 @@ const postGenre = async ({name, description}) => {
 module.exports = {
     getGenres,
     getGenreById,
-    getGenreByName,
+    getGenresByName,
     postGenre
 }
