@@ -1,6 +1,7 @@
-import artistService from "../services/artist.service";
+const artistService =  require("../services/artist.service");
 
 const getAll = async (req, res, next) => {
+    console.log(req);
     try {
         res.json(await artistService.getArtists());
     } catch (err) {
@@ -22,16 +23,17 @@ const getByName = async (req, res, next) => {
     try {
         res.json(await artistService.getArtistsByName(req.body.name));
     } catch (err) {
-        console.error(`Error while getting artists`, err.message);
+        console.error(`Error while getting artist by name`, err.message);
         next(err);
     }
 }
 
 const create = async (req, res, next) => {
+    console.log(req);
     try {
         res.json(await artistService.postArtist(req.body));
     } catch (err) {
-        console.error(`Error while getting artists`, err.message);
+        console.error(`Error while creating artist: `, err.message);
         next(err);
     }
 }
