@@ -1,10 +1,11 @@
 /*
     TODO:
 
-    3. Implement routes for songs
-    4. Implement pages
+    3. Implement routes for genre, album. song
     5. SET UP MULTER
-    6. Read about bodyParser
+    6. Implement file receiving functionality
+    7. Implement pages
+    8. Read about bodyParser
 */
 
 const express = require("express");
