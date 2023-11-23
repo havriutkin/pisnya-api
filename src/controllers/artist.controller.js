@@ -21,7 +21,7 @@ const getById = async (req, res, next) => {
 
 const getByName = async (req, res, next) => {
     try {
-        res.json(await artistService.getArtistsByName(req.body.name));
+        res.json(await artistService.getArtistsByName(req.query.name));
     } catch (err) {
         console.error(`Error while getting artist by name`, err.message);
         next(err);
