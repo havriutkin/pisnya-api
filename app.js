@@ -6,15 +6,18 @@
     6. Implement file receiving functionality
     7. Implement pages
     8. Read about bodyParser
+    9. Comment controllers code
 */
 
+/* ------------ Require External Dependencies ------------ */
 const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./src/configs/db.config");
 const multer = require('multer');
 
-
+/* ------------ Require Routers ------------ */
 const artistRouter = require("./src/routes/artist.route");
+const genreRouter = require("./src/routes/genre.route");
 
 
 const app = express();
@@ -42,7 +45,8 @@ app.get('/', (req, res) => {
     res.json({msg: 'Ok'});
 })
 
-app.use('/artist', artistRouter);   // Attach artist router
+app.use('/artist', artistRouter);   // Registrate artist router
+app.use('/genre', genreRouter);     // Registrate genre router
 
 
 /* ------------ Error Handler Middleware ------------ */
