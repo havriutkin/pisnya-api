@@ -7,7 +7,7 @@ router.get('/', artistController.getAll);
 
 router.get('/:id', artistController.getById);
 
-router.get('/artistbyname', artistController.getByName);
+router.get('/byname', artistController.getByName);
 
 router.post('/', artistController.create);
 
