@@ -49,6 +49,7 @@ const postArtist = async ({name, bio, birth_date, profile_img_url}) => {
         VALUES ($1, $2, $3, $4)
         RETURNING artist_id;
     `;
+    console.log(sql);
 
     params = [name, bio, birth_date, profile_img_url];
 
@@ -56,7 +57,7 @@ const postArtist = async ({name, bio, birth_date, profile_img_url}) => {
         const result = await query(sql, params);
         return result;
     } catch (error) {
-        console.error("Error posting song:", error);
+        console.error("Error posting artist:", error);
         throw error;
     }
 };
