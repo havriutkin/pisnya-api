@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.get('/', artistController.getAll);
 
-router.get('/:id', artistController.getById);
-
 router.get('/byname', artistController.getByName);
+
+router.get('/:id', artistController.getById);
 
 router.post('/', artistController.create);
 

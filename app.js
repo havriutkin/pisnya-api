@@ -1,12 +1,13 @@
 /*
     TODO:
 
-    3. Implement routes for genre, album. song
+    3. Implement routes for album, song
     5. SET UP MULTER
     6. Implement file receiving functionality
     7. Implement pages
     8. Read about bodyParser
     9. Comment controllers code
+    10. Test gernre route
 */
 
 /* ------------ Require External Dependencies ------------ */
