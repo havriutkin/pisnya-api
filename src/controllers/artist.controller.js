@@ -12,7 +12,7 @@ const getAll = async (req, res, next) => {
 
 const getById = async (req, res, next) => {
     try {
-        res.json(await artistService.getArtistById(req.query.id));
+        res.json(await artistService.getArtistById(req.params.id));
     } catch (err) {
         console.error(`Error while getting artist by id`, err.message);
         next(err);
