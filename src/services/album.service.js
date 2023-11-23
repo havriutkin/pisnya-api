@@ -11,7 +11,7 @@ const getAlbums = async () => {
             artist.name AS artist_name, album.release_date,
             album.cover_img_url
         FROM album
-        JOIN artist ON album.fk_artist_id = artist.id;
+        JOIN artist ON album.fk_artist_id = artist.artist_id;
     `;
 
     const data = query(sql);
@@ -25,7 +25,7 @@ const getAlbumById = async (id) => {
             artist.name AS artist_name, album.release_date,
             album.cover_img_url
         FROM album
-        JOIN artist ON album.fk_artist_id = artist.id
+        JOIN artist ON album.fk_artist_id = artist.artist_id
         WHERE album.album_id = $1;
     `;
 
@@ -40,7 +40,7 @@ const getAlbumsByTitle = async (title) => {
             artist.name AS artist_name, album.release_date,
             album.cover_img_url
         FROM album
-        JOIN artist ON album.fk_artist_id = artist.id
+        JOIN artist ON album.fk_artist_id = artist.artist_id
         WHERE album.title ILIKE $1
         ORDER BY LENGTH(album.title);
     `;
@@ -57,7 +57,7 @@ const getAlbumByArtistId = async (artistId) => {
             artist.name AS artist_name, album.release_date,
             album.cover_img_url
         FROM album
-        JOIN artist ON album.fk_artist_id = artist.id
+        JOIN artist ON album.fk_artist_id = artist.artist_id
         WHERE artist.id = $1;
     `;
 

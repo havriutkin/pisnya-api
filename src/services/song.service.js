@@ -22,9 +22,9 @@ const getSongs = async () => {
             song.release_date, song.duration, song.play_count, 
             song.file_url, song.img_url
         FROM song
-        JOIN artist ON song.fk_artist_id = artist.id
-        LEFT JOIN genre ON song.fk_genre_id = genre.id
-        LEFT JOIN album ON song.fk_album_id = album.id;
+        JOIN artist ON song.fk_artist_id = artist.artist_id
+        LEFT JOIN genre ON song.fk_genre_id = genre.genre_id
+        LEFT JOIN album ON song.fk_album_id = album.album_id;
     `;
     const data = await query(sql);
     return data;
@@ -38,9 +38,9 @@ const getSongById = async (id) => {
             song.release_date, song.duration, song.play_count, 
             song.file_url, song.img_url
         FROM song
-        JOIN artist ON song.fk_artist_id = artist.id
-        LEFT JOIN genre ON song.fk_genre_id = genre.id
-        LEFT JOIN album ON song.fk_album_id = album.id
+        JOIN artist ON song.fk_artist_id = artist.artist_id
+        LEFT JOIN genre ON song.fk_genre_id = genre.genre_id
+        LEFT JOIN album ON song.fk_album_id = album.album_id
         WHERE song.song_id = $1;
     `;
     const data = await query(sql, [id]);
@@ -55,9 +55,9 @@ const getSongsByGenreName = async (genreName) => {
             song.release_date, song.duration, song.play_count, 
             song.file_url, song.img_url
         FROM song
-        JOIN artist ON song.fk_artist_id = artist.id
-        LEFT JOIN genre ON song.fk_genre_id = genre.id
-        LEFT JOIN album ON song.fk_album_id = album.id
+        JOIN artist ON song.fk_artist_id = artist.artist_id
+        LEFT JOIN genre ON song.fk_genre_id = genre.genre_id
+        LEFT JOIN album ON song.fk_album_id = album.album_id
         WHERE genre.name ILIKE $1
         ORDER BY LENGTH(genre.name);
     `;
@@ -73,9 +73,9 @@ const getSongsByArtistName = async (artistName) => {
             song.release_date, song.duration, song.play_count, 
             song.file_url, song.img_url
         FROM song
-        JOIN artist ON song.fk_artist_id = artist.id
-        LEFT JOIN genre ON song.fk_genre_id = genre.id
-        LEFT JOIN album ON song.fk_album_id = album.id
+        JOIN artist ON song.fk_artist_id = artist.artist_id
+        LEFT JOIN genre ON song.fk_genre_id = genre.genre_id
+        LEFT JOIN album ON song.fk_album_id = album.album_id
         WHERE artist.name ILIKE $1;
         ORDER BY LENGTH(artist.name);
     `;
@@ -91,9 +91,9 @@ const getSongsByTitle = async (title) => {
             song.release_date, song.duration, song.play_count, 
             song.file_url, song.img_url
         FROM song
-        JOIN artist ON song.fk_artist_id = artist.id
-        LEFT JOIN genre ON song.fk_genre_id = genre.id
-        LEFT JOIN album ON song.fk_album_id = album.id
+        JOIN artist ON song.fk_artist_id = artist.artist_id
+        LEFT JOIN genre ON song.fk_genre_id = genre.genre_id
+        LEFT JOIN album ON song.fk_album_id = album.album_id
         WHERE song.title ILIKE $1
         ORDER BY LENGTH(song.title);
     `;
@@ -110,9 +110,9 @@ const getSongsByFilter = async ({genreName, artistName, title}) => {
                song.release_date, song.duration, song.play_count, 
                song.file_url, song.img_url
         FROM song
-        LEFT JOIN artist ON song.fk_artist_id = artist.id
-        LEFT JOIN genre ON song.fk_genre_id = genre.id
-        LEFT JOIN album ON song.fk_album_id = album.id
+        LEFT JOIN artist ON song.fk_artist_id = artist.artist_id
+        LEFT JOIN genre ON song.fk_genre_id = genre.genre_id
+        LEFT JOIN album ON song.fk_album_id = album.album_id
     `;
 
     // Array to hold SQL parameters
