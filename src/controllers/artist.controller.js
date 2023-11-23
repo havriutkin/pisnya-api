@@ -1,7 +1,6 @@
 const artistService =  require("../services/artist.service");
 
 const getAll = async (req, res, next) => {
-    console.log(req);
     try {
         res.json(await artistService.getArtists());
     } catch (err) {

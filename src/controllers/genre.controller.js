@@ -1,7 +1,6 @@
 const genreService = require("../services/genre.service");
 
 const getAll = async (req, res, next) => {
-    console.log(req);
     try {
         res.json(await genreService.getGenres());
     } catch (err) {
@@ -11,7 +10,6 @@ const getAll = async (req, res, next) => {
 }
 
 const getById = async (req, res, next) => {
-    console.log('hello');
     try {
         res.json(await genreService.getGenreById(req.params.id));
     } catch (err) {

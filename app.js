@@ -19,7 +19,7 @@ const multer = require('multer');
 /* ------------ Require Routers ------------ */
 const artistRouter = require("./src/routes/artist.route");
 const genreRouter = require("./src/routes/genre.route");
-
+const albumRouter = require("./src/routes/album.route");
 
 const app = express();
 const upload = multer();
@@ -48,6 +48,7 @@ app.get('/', (req, res) => {
 
 app.use('/artist', artistRouter);   // Registrate artist router
 app.use('/genre', genreRouter);     // Registrate genre router
+app.use('/album', albumRouter);     // Registrate album router
 
 
 /* ------------ Error Handler Middleware ------------ */
