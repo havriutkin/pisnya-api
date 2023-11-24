@@ -1,8 +1,6 @@
 const {query} = require("./db.service");
-const {emptyOrRows} = require("../utils/helper.util");
 
-
-// ------------ GET QUERIES ------------
+// ------------ GET SERVICES ------------
 
 // Get all artists (empty array if doesn't exist)
 const getArtists = async () => {
@@ -27,8 +25,11 @@ const getArtistById = async (id) => {
     return data;
 };
 
-// Get artists by name. Case-insensitive, partial matching (empty array if doesn't exist)
-const getArtistsByName = async (artistName) => {
+/* Filter: {
+        name (Case-insensitive, partial matching (empty array if doesn't exist))
+    }
+*/
+const getArtistsByFilter = async (filter) => {
     const sql = `
         SELECT *
         FROM artist
@@ -36,11 +37,11 @@ const getArtistsByName = async (artistName) => {
         ORDER BY LENGTH(name);
     `;
 
-    const data = query(sql, [`%${artistName}%`])
+    const data = query(sql, [`%${filter.name}%`])
     return data;
-};
+}
 
-// ------------ POST QUERIES ------------
+// ------------ POST SERVICES ------------
 
 // Add new artist to db. Returns id of added artist if success. Throws error otherwise
 const postArtist = async ({name, bio, birth_date, profile_img_url}) => {
@@ -49,7 +50,6 @@ const postArtist = async ({name, bio, birth_date, profile_img_url}) => {
         VALUES ($1, $2, $3, $4)
         RETURNING artist_id;
     `;
-    console.log(sql);
 
     params = [name, bio, birth_date, profile_img_url];
 
@@ -62,9 +62,49 @@ const postArtist = async ({name, bio, birth_date, profile_img_url}) => {
     }
 };
 
+// ------------ PUT SERVICES ------------
+const putArtist = async ({id, name, bio, birth_date, profile_img_url}) => {
+    const sql = `
+        UPDATE artist
+        SET name=$1, bio=$2, birth_date=$3, profile_img_url=$4
+        WHERE id = $5
+        RETURNING id;
+    `;
+
+    params = [name, bio, birth_date, profile_img_url, id];
+
+    try {
+        const result = await query(sql, params);
+        return result;
+    } catch (err) {
+        console.error("Error while putting artist", err.message);
+        throw(err);
+    }
+}
+
+// ------------ DELETE SERVICES ------------
+const deleteArtist = async (id) => {
+    const sql = `
+        DELETE FROM artist
+        WHERE id = $1;
+    `;
+
+    params = [id];
+
+    try {
+        const result = await query(sql, params);
+        return {artist_id: id};
+    } catch (err) {
+        console.error("Error while deleting artist", err.message);
+        throw(err);
+    }
+}
+
 module.exports = {
     getArtists,
     getArtistById,
-    getArtistsByName,
-    postArtist
+    getArtistsByFilter,
+    postArtist,
+    putArtist,
+    deleteArtist
 }
