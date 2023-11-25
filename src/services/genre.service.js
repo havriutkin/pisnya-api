@@ -1,6 +1,4 @@
 const {query} = require("./db.service");
-const {emptyOrRows} = require("../utils/helper.util");
-
 
 // ------------ GET QUERIES ------------
 
@@ -28,7 +26,7 @@ const getGenreById = async (id) => {
 };
 
 // Return genre with given name. Case-insensitive, partial matching. (empty array if doesn't exist)
-const getGenresByName = async (genreName) => {
+const getGenresByFilter = async (filter) => {
     const sql = `
         SELECT *
         FROM genre
@@ -36,7 +34,7 @@ const getGenresByName = async (genreName) => {
         ORDER BY LENGTH(name);
     `;
 
-    const data = await query(sql, [`%${genreName}%`]);
+    const data = await query(sql, [`%${filter.name}%`]);
     return data;
 };
 
@@ -61,9 +59,50 @@ const postGenre = async ({name, description}) => {
     }
 };
 
+// ------------ PUT SERVICES ------------
+const putGenre = async ({id, name, description}) => {
+    const sql = `
+        UPDATE genre
+        SET name=$1, description=$2
+        WHERE id = $3
+        RETURNING id;
+    `;
+
+    params = [name, description, id];
+
+    try {
+        const result = await query(sql, params);
+        return result;
+    } catch (err) {
+        console.error("Error while putting genre", err.message);
+        throw(err);
+    }
+}
+
+// ------------ DELETE SERVICES ------------
+const deleteGenre = async (id) => {
+    const sql = `
+        DELETE FROM genre
+        WHERE id = $1;
+    `;
+
+    params = [id];
+
+    try {
+        await query(sql, params);
+        return {genre_id: id};
+    } catch (err) {
+        console.error("Error while deleting genre", err.message);
+        throw(err);
+    }
+}
+
+
 module.exports = {
     getGenres,
     getGenreById,
-    getGenresByName,
-    postGenre
+    getGenresByFilter,
+    postGenre,
+    putGenre,
+    deleteGenre
 }

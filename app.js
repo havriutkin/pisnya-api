@@ -1,7 +1,7 @@
 /*
     TODO:
 
-    3. Implement routes for album, song
+    3. Implement routes for song
     5. SET UP MULTER
     6. Implement file receiving functionality
     7. Implement pages

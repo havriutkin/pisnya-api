@@ -92,7 +92,7 @@ const deleteArtist = async (id) => {
     params = [id];
 
     try {
-        const result = await query(sql, params);
+        await query(sql, params);
         return {artist_id: id};
     } catch (err) {
         console.error("Error while deleting artist", err.message);
