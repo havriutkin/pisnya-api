@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.get('/', albumController.getAll);
 
-router.get('/bytitle', albumController.getByTitle);
-
-router.get('/byartistid', albumController.getByArtistId);
-
 router.get('/:id', albumController.getById);
 
 router.post('/', albumController.create);
+
+router.put('/:id', albumController.update);
+
+router.delete('/:id', albumController.remove);
 
 module.exports = router;

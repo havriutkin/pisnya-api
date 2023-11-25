@@ -33,37 +33,21 @@ const getAlbumById = async (id) => {
     return data;
 };
 
-// Get albums by title. Case-insensitive, partial matching (empty array if doesn't exist)
-const getAlbumsByTitle = async (title) => {
+const getAlbumsByFilter = async (filter) => {
     const sql = `
         SELECT album.album_id, album.title,
             artist.name AS artist_name, album.release_date,
             album.cover_img_url
         FROM album
         JOIN artist ON album.fk_artist_id = artist.artist_id
-        WHERE album.title ILIKE $1
+        WHERE artist.id = $1
+            OR album.title ILIKE $2
         ORDER BY LENGTH(album.title);
     `;
 
-    const data = query(sql, [`%${title}%`]);
+    const data = query(sql, [filter.artist_id, filter.title]);
     return data;
-};
-
-
-// Get album by given artist id (empty array if doesn't exist)
-const getAlbumByArtistId = async (artistId) => {
-    const sql = `
-        SELECT album.album_id, album.title,
-            artist.name AS artist_name, album.release_date,
-            album.cover_img_url
-        FROM album
-        JOIN artist ON album.fk_artist_id = artist.artist_id
-        WHERE artist.id = $1;
-    `;
-
-    const data = query(sql, [artistId]);
-    return data;
-};
+}   
 
 // ------------ POST QUERIES ------------
 
@@ -81,15 +65,55 @@ const postAlbum = async ({title, artist_id, release_date, cover_img_url}) => {
         const result = await query(sql, params);
         return result;
     } catch (error) {
-        console.error("Error posting song:", error);
+        console.error("Error posting album:", error);
         throw error;
     }
 }
 
+// ------------ PUT SERVICES ------------
+const putAlbum = async ({id, title, artist_id, release_date, cover_img_url}) => {
+    const sql = `
+        UPDATE genre
+        SET fk_artist_id=$1, title=$2, release_date=$3, cover_img_url=$4
+        WHERE id = $5
+        RETURNING id;
+    `;
+
+    params = [artist_id, title, release_date, cover_img_url, id];
+
+    try {
+        const result = await query(sql, params);
+        return result;
+    } catch (err) {
+        console.error("Error while putting album", err.message);
+        throw(err);
+    }
+}
+
+// ------------ DELETE SERVICES ------------
+const deleteAlbum = async (id) => {
+    const sql = `
+        DELETE FROM album
+        WHERE id = $1;
+    `;
+
+    params = [id];
+
+    try {
+        await query(sql, params);
+        return {album_id: id};
+    } catch (err) {
+        console.error("Error while deleting album", err.message);
+        throw(err);
+    }
+}
+
+
 module.exports = {
     getAlbums,
     getAlbumById,
-    getAlbumsByTitle,
-    getAlbumByArtistId,
-    postAlbum
+    getAlbumsByFilter,
+    postAlbum,
+    putAlbum,
+    deleteAlbum
 }
